@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Management Dashboard</title>
+    <style>
+        /* Basic Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f9;
+            color: #333;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        header h1 {
+            font-size: 24px;
+            color: #444;
+        }
+
+        .form-section {
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            margin-bottom: 10px;
+        }
+
+        .form-group input {
+            flex: 1;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .form-group button {
+            margin-left: 10px;
+            padding: 10px 20px;
+            background: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .form-group button:hover {
+            background: #0056b3;
+        }
+
+        .tasks {
+            margin-top: 20px;
+        }
+
+        .task {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            margin-bottom: 10px;
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .task .title {
+            flex: 1;
+        }
+
+        .task select {
+            margin-left: 10px;
+            padding: 5px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background: #fff;
+            font-size: 14px;
+        }
+
+        .task select.pending {
+            color: #ff9800;
+        }
+
+        .task select.in-progress {
+            color: #2196f3;
+        }
+
+        .task select.completed {
+            color: #4caf50;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Project Management Dashboard</h1>
+        </header>
+
+        <!-- Add Task Section -->
+        <div class="form-section">
+            <div class="form-group">
+                <input type="text" id="taskInput" placeholder="Enter new task">
+                <button onclick="addTask()">Add Task</button>
+            </div>
+        </div>
+
+        <!-- Task List Section -->
+        <div class="tasks" id="tasksContainer">
+            <!-- Tasks will be dynamically added here -->
+        </div>
+    </div>
+
+    <script>
+        const tasksContainer = document.getElementById('tasksContainer');
+
+        // Add a new task
+        function addTask() {
+            const taskInput = document.getElementById('taskInput');
+            const taskTitle = taskInput.value.trim();
+
+            if (taskTitle === '') {
+                alert('Please enter a task!');
+                return;
+            }
+
+            // Create a task element
+            const task = document.createElement('div');
+            task.className = 'task';
+
+            // Task title
+            const title = document.createElement('span');
+            title.className = 'title';
+            title.textContent = taskTitle;
+
+            // Task status dropdown
+            const statusDropdown = document.createElement('select');
+            statusDropdown.innerHTML = `
+                <option value="Pending" class="pending">Pending</option>
+                <option value="InProgress" class="in-progress">In Progress</option>
+                <option value="Completed" class="completed">Completed</option>
+            `;
+            statusDropdown.addEventListener('change', updateStatusColor);
+
+            // Append title and dropdown to the task element
+            task.appendChild(title);
+            task.appendChild(statusDropdown);
+
+            // Append the task element to the container
+            tasksContainer.appendChild(task);
+
+            // Clear the input field
+            taskInput.value = '';
+        }
+
+        // Update the color of the task status dropdown based on selection
+        function updateStatusColor(event) {
+            const dropdown = event.target;
+            dropdown.className = ''; // Reset class
+            dropdown.classList.add(dropdown.value.toLowerCase().replace(' ', '-'));
+        }
+    </script>
+</body>
+</html>

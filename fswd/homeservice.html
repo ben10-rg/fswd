@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Services</title>
+    <style>
+        /* Basic Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body Styling */
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background: #f9f9f9;
+            color: #333;
+        }
+
+        /* Header */
+        header {
+            background: #444;
+            color: #fff;
+            padding: 10px 0;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        /* Services Section */
+        .services {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 10px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .service-card {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            width: 300px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .service-card img {
+            width: 100%;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+        }
+
+        .service-card h3 {
+            padding: 10px;
+            font-size: 20px;
+            color: #444;
+        }
+
+        .service-card p {
+            padding: 0 10px 10px;
+            font-size: 16px;
+            color: #666;
+        }
+
+        .service-card button {
+            display: block;
+            width: 80%;
+            margin: 10px auto 20px;
+            padding: 10px;
+            font-size: 16px;
+            color: #fff;
+            background: #007BFF;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .service-card button:hover {
+            background: #0056b3;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            background: #444;
+            color: #fff;
+            padding: 10px 0;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Home Services</h1>
+        <p>Choose from a variety of professional services</p>
+    </header>
+
+    <section class="services">
+        <!-- Service 1 -->
+        <div class="service-card">
+            <img src="https://via.placeholder.com/300x200" alt="Plumbing Service">
+            <h3>Plumbing</h3>
+            <p>Expert plumbing services for your home. From leaks to installations, we've got you covered.</p>
+            <button>Book Now</button>
+        </div>
+
+        <!-- Service 2 -->
+        <div class="service-card">
+            <img src="https://via.placeholder.com/300x200" alt="Electrical Service">
+            <h3>Electrical</h3>
+            <p>Professional electricians for installations, repairs, and safety checks.</p>
+            <button>Book Now</button>
+        </div>
+
+        <!-- Service 3 -->
+        <div class="service-card">
+            <img src="https://via.placeholder.com/300x200" alt="Cleaning Service">
+            <h3>Cleaning</h3>
+            <p>Keep your home spotless with our reliable and affordable cleaning services.</p>
+            <button>Book Now</button>
+        </div>
+
+        <!-- Service 4 -->
+        <div class="service-card">
+            <img src="https://via.placeholder.com/300x200" alt="Painting Service">
+            <h3>Painting</h3>
+            <p>Professional painting services to refresh and beautify your spaces.</p>
+            <button>Book Now</button>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2024 Home Services. All rights reserved.</p>
+    </footer>
+</body>
+</html>

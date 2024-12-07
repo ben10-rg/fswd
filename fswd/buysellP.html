@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Classifieds Web App</title>
+    <style>
+        /* Basic Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f8f9fa;
+            color: #333;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            background: #fff;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        header {
+            background: #007bff;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 24px;
+        }
+
+        .form-section {
+            padding: 20px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .form-group button {
+            padding: 10px 20px;
+            color: #fff;
+            background: #007bff;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .form-group button:hover {
+            background: #0056b3;
+        }
+
+        .ads-section {
+            padding: 20px;
+        }
+
+        .ad {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 15px;
+            background: #f9f9f9;
+        }
+
+        .ad h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .ad p {
+            margin-bottom: 5px;
+        }
+
+        .ad .price {
+            font-weight: bold;
+            color: #007bff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Classifieds: Buy & Sell Used Products</h1>
+        </header>
+
+        <!-- Post Ad Section -->
+        <div class="form-section">
+            <h2>Post an Ad</h2>
+            <div class="form-group">
+                <label for="title">Product Title</label>
+                <input type="text" id="title" placeholder="Enter product title">
+            </div>
+            <div class="form-group">
+                <label for="description">Description</label>
+                <textarea id="description" rows="3" placeholder="Enter product description"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="price">Price (in USD)</label>
+                <input type="number" id="price" placeholder="Enter price">
+            </div>
+            <div class="form-group">
+                <button onclick="postAd()">Post Ad</button>
+            </div>
+        </div>
+
+        <!-- Ads Section -->
+        <div class="ads-section" id="ads-section">
+            <h2>Available Listings</h2>
+            <!-- Ads will be added dynamically here -->
+        </div>
+    </div>
+
+    <script>
+        // JavaScript for managing ads
+        const ads = [];
+
+        // Function to post an ad
+        function postAd() {
+            const title = document.getElementById('title').value.trim();
+            const description = document.getElementById('description').value.trim();
+            const price = document.getElementById('price').value.trim();
+
+            if (!title || !description || !price) {
+                alert('Please fill in all fields.');
+                return;
+            }
+
+            // Add new ad to the list
+            ads.push({ title, description, price });
+
+            // Clear the form fields
+            document.getElementById('title').value = '';
+            document.getElementById('description').value = '';
+            document.getElementById('price').value = '';
+
+            // Render the ads
+            renderAds();
+        }
+
+        // Function to render the ads
+        function renderAds() {
+            const adsSection = document.getElementById('ads-section');
+            adsSection.innerHTML = '<h2>Available Listings</h2>'; // Reset ads section
+
+            ads.forEach(ad => {
+                const adElement = document.createElement('div');
+                adElement.classList.add('ad');
+                adElement.innerHTML = `
+                    <h3>${ad.title}</h3>
+                    <p>${ad.description}</p>
+                    <p class="price">$${ad.price}</p>
+                `;
+                adsSection.appendChild(adElement);
+            });
+        }
+    </script>
+</body>
+</html>

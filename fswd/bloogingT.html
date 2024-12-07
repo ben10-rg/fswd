@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Microblogging App</title>
+    <style>
+        /* Basic Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 600px;
+            background: #fff;
+            color: #333;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+
+        header {
+            background: #6a11cb;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+        }
+
+        header h1 {
+            font-size: 24px;
+        }
+
+        .post-form {
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .post-form input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .post-form button {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            color: #fff;
+            background: #2575fc;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .post-form button:hover {
+            background: #1a5bb8;
+        }
+
+        .posts {
+            padding: 20px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .post {
+            background: #f9f9f9;
+            margin-bottom: 15px;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .post .author {
+            font-weight: bold;
+            color: #6a11cb;
+        }
+
+        .post .content {
+            margin-top: 10px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Microblogging App</h1>
+            <p>Post your thoughts and share them with your followers!</p>
+        </header>
+
+        <div class="post-form">
+            <input type="text" id="username" placeholder="Enter your name">
+            <input type="text" id="content" placeholder="What's on your mind?">
+            <button onclick="addPost()">Post</button>
+        </div>
+
+        <div class="posts" id="posts">
+            <!-- Posts will appear here -->
+        </div>
+    </div>
+
+    <script>
+        // Array to hold posts
+        let posts = [];
+
+        // Function to add a new post
+        function addPost() {
+            const username = document.getElementById('username').value.trim();
+            const content = document.getElementById('content').value.trim();
+
+            if (!username || !content) {
+                alert('Please enter both your name and a post content.');
+                return;
+            }
+
+            // Add new post to the array
+            posts.unshift({ author: username, content });
+
+            // Clear input fields
+            document.getElementById('username').value = '';
+            document.getElementById('content').value = '';
+
+            // Render posts
+            renderPosts();
+        }
+
+        // Function to render posts
+        function renderPosts() {
+            const postsContainer = document.getElementById('posts');
+            postsContainer.innerHTML = '';
+
+            posts.forEach(post => {
+                const postElement = document.createElement('div');
+                postElement.classList.add('post');
+                postElement.innerHTML = `
+                    <div class="author">${post.author}</div>
+                    <div class="content">${post.content}</div>
+                `;
+                postsContainer.appendChild(postElement);
+            });
+        }
+    </script>
+</body>
+</html>

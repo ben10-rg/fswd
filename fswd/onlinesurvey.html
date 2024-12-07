@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Survey Application</title>
+    <style>
+        /* Basic Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        header h1 {
+            font-size: 24px;
+            color: #444;
+        }
+
+        .question {
+            margin-bottom: 15px;
+        }
+
+        .question h3 {
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        .answer input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .thank-you {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+            color: #28a745;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Online Survey Application</h1>
+        </header>
+
+        <!-- Survey Section -->
+        <div id="survey">
+            <!-- Questions will be dynamically added here -->
+        </div>
+
+        <!-- Submit Button -->
+        <button id="submitBtn" onclick="submitSurvey()">Submit Answers</button>
+
+        <!-- Thank You Message -->
+        <div class="thank-you" id="thankYouMessage">
+            <p>Thank you for completing the survey!</p>
+        </div>
+    </div>
+
+    <script>
+        // Predefined collection of questions
+        const allQuestions = [
+            "What is your favorite color?",
+            "What is your favorite food?",
+            "Where do you like to travel?",
+            "What is your hobby?",
+            "What is your dream job?",
+            "Who inspires you the most?",
+            "What is your favorite book?",
+            "What is your favorite movie?",
+            "What is your biggest achievement?",
+            "What is your favorite sport?"
+        ];
+
+        const surveyDiv = document.getElementById("survey");
+
+        // Shuffle and select 5 random questions
+        const selectedQuestions = allQuestions
+            .sort(() => Math.random() - 0.5)
+            .slice(0, 5);
+
+        // Render the questions in the survey section
+        selectedQuestions.forEach((question, index) => {
+            const questionDiv = document.createElement("div");
+            questionDiv.className = "question";
+
+            const questionTitle = document.createElement("h3");
+            questionTitle.textContent = `${index + 1}. ${question}`;
+
+            const answerInput = document.createElement("input");
+            answerInput.type = "text";
+            answerInput.placeholder = "Your answer...";
+            answerInput.className = "answer";
+
+            questionDiv.appendChild(questionTitle);
+            questionDiv.appendChild(answerInput);
+            surveyDiv.appendChild(questionDiv);
+        });
+
+        // Handle survey submission
+        function submitSurvey() {
+            const answers = document.querySelectorAll(".answer");
+            const userAnswers = Array.from(answers).map(
+                (input) => input.value.trim()
+            );
+
+            if (userAnswers.some((answer) => answer === "")) {
+                alert("Please answer all questions before submitting.");
+                return;
+            }
+
+            // Hide survey and show thank-you message
+            document.getElementById("survey").style.display = "none";
+            document.getElementById("submitBtn").style.display = "none";
+            document.getElementById("thankYouMessage").style.display = "block";
+        }
+    </script>
+</body>
+</html>

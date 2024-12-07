@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vehicle Classifieds</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f9;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 20px auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      text-align: center;
+      color: #444;
+    }
+
+    .vehicle-list, .favorite-list {
+      margin-top: 20px;
+    }
+
+    .vehicle {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      margin-bottom: 10px;
+      background-color: #f9f9f9;
+    }
+
+    .vehicle h3 {
+      margin: 0;
+    }
+
+    .vehicle p {
+      margin: 5px 0;
+    }
+
+    .vehicle button {
+      padding: 8px 12px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .vehicle .add-favorite {
+      background-color: #007bff;
+      color: white;
+    }
+
+    .vehicle .add-favorite:hover {
+      background-color: #0056b3;
+    }
+
+    .vehicle .remove {
+      background-color: #f44336;
+      color: white;
+    }
+
+    .vehicle .remove:hover {
+      background-color: #c62828;
+    }
+
+    .add-vehicle {
+      margin-top: 20px;
+      padding: 10px;
+      border-radius: 5px;
+      background-color: #f1f1f1;
+    }
+
+    .add-vehicle input, .add-vehicle button {
+      display: block;
+      width: 100%;
+      margin: 10px 0;
+      padding: 10px;
+      font-size: 16px;
+    }
+
+    .add-vehicle button {
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    .add-vehicle button:hover {
+      background-color: #388e3c;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Vehicle Classifieds</h1>
+
+    <!-- List of Vehicles -->
+    <div class="vehicle-list">
+      <h2>Vehicles for Sale</h2>
+      <div id="vehicles"></div>
+    </div>
+
+    <!-- Favorites -->
+    <div class="favorite-list">
+      <h2>Favorites</h2>
+      <div id="favorites"></div>
+    </div>
+
+    <!-- Add a Vehicle -->
+    <div class="add-vehicle">
+      <h2>Add a Vehicle</h2>
+      <input id="vehicleName" type="text" placeholder="Vehicle Name" />
+      <input id="vehiclePrice" type="number" placeholder="Price (USD)" />
+      <input id="vehicleDescription" type="text" placeholder="Description" />
+      <button onclick="addVehicle()">Add Vehicle</button>
+    </div>
+  </div>
+
+  <script>
+    // Sample data
+    let vehicles = [
+      { name: "Toyota Corolla", price: 8000, description: "2015, 50k miles" },
+      { name: "Ford F-150", price: 12000, description: "2017, 70k miles" },
+      { name: "Honda Civic", price: 9000, description: "2016, 60k miles" },
+    ];
+
+    let favorites = [];
+
+    // Display vehicles
+    function displayVehicles() {
+      const vehiclesContainer = document.getElementById("vehicles");
+      vehiclesContainer.innerHTML = "";
+
+      vehicles.forEach((vehicle, index) => {
+        const vehicleElement = document.createElement("div");
+        vehicleElement.className = "vehicle";
+
+        vehicleElement.innerHTML = `
+          <div>
+            <h3>${vehicle.name}</h3>
+            <p>Price: $${vehicle.price}</p>
+            <p>${vehicle.description}</p>
+          </div>
+          <button class="add-favorite" onclick="addToFavorites(${index})">Add to Favorites</button>
+        `;
+
+        vehiclesContainer.appendChild(vehicleElement);
+      });
+    }
+
+    // Display favorites
+    function displayFavorites() {
+      const favoritesContainer = document.getElementById("favorites");
+      favoritesContainer.innerHTML = "";
+
+      if (favorites.length === 0) {
+        favoritesContainer.innerHTML = "<p>No favorites added yet.</p>";
+        return;
+      }
+
+      favorites.forEach((vehicle, index) => {
+        const favoriteElement = document.createElement("div");
+        favoriteElement.className = "vehicle";
+
+        favoriteElement.innerHTML = `
+          <div>
+            <h3>${vehicle.name}</h3>
+            <p>Price: $${vehicle.price}</p>
+            <p>${vehicle.description}</p>
+          </div>
+          <button class="remove" onclick="removeFromFavorites(${index})">Remove</button>
+        `;
+
+        favoritesContainer.appendChild(favoriteElement);
+      });
+    }
+
+    // Add a vehicle
+    function addVehicle() {
+      const name = document.getElementById("vehicleName").value.trim();
+      const price = parseFloat(document.getElementById("vehiclePrice").value.trim());
+      const description = document.getElementById("vehicleDescription").value.trim();
+
+      if (!name || !price || !description) {
+        alert("All fields are required!");
+        return;
+      }
+
+      vehicles.push({ name, price, description });
+      displayVehicles();
+
+      // Clear input fields
+      document.getElementById("vehicleName").value = "";
+      document.getElementById("vehiclePrice").value = "";
+      document.getElementById("vehicleDescription").value = "";
+    }
+
+    // Add to favorites
+    function addToFavorites(index) {
+      const vehicle = vehicles[index];
+      favorites.push(vehicle);
+      displayFavorites();
+    }
+
+    // Remove from favorites
+    function removeFromFavorites(index) {
+      favorites.splice(index, 1);
+      displayFavorites();
+    }
+
+    // Initial render
+    displayVehicles();
+    displayFavorites();
+  </script>
+</body>
+</html>

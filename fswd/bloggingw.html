@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Microblogging WhatsApp App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            background-color: #ffffff;
+            width: 400px;
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #075E54;
+        }
+        .form-section {
+            margin-bottom: 20px;
+        }
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #25D366;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #1EBE59;
+        }
+        .post {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 10px;
+        }
+        .post .author {
+            font-weight: bold;
+            color: #075E54;
+        }
+        .post .content {
+            margin-top: 5px;
+        }
+        .empty-feed {
+            text-align: center;
+            font-size: 14px;
+            color: #aaa;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>WhatsApp Microblog</h1>
+
+        <!-- Create Post Section -->
+        <div class="form-section">
+            <h2>Create a Post</h2>
+            <input type="text" id="username" placeholder="Your Name">
+            <textarea id="message" rows="3" placeholder="What's on your mind?"></textarea>
+            <button onclick="createPost()">Post</button>
+        </div>
+
+        <!-- Follow User Section -->
+        <div class="form-section">
+            <h2>Follow Someone</h2>
+            <input type="text" id="followUser" placeholder="Enter username to follow">
+            <button onclick="followUser()">Follow</button>
+        </div>
+
+        <!-- Feed Section -->
+        <div class="form-section">
+            <h2>Your Feed</h2>
+            <div id="feed">
+                <p class="empty-feed">No posts yet. Follow someone to see posts!</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Arrays to store posts and following users
+        const posts = [];
+        const following = new Set();
+
+        // Function to create a post
+        function createPost() {
+            const username = document.getElementById('username').value.trim();
+            const message = document.getElementById('message').value.trim();
+
+            if (!username || !message) {
+                alert('Both fields are required!');
+                return;
+            }
+
+            // Save the post
+            posts.push({ username, message });
+            document.getElementById('username').value = '';
+            document.getElementById('message').value = '';
+            updateFeed();
+        }
+
+        // Function to follow a user
+        function followUser() {
+            const userToFollow = document.getElementById('followUser').value.trim();
+
+            if (!userToFollow) {
+                alert('Enter a username to follow!');
+                return;
+            }
+
+            following.add(userToFollow);
+            alert(`You are now following ${userToFollow}!`);
+            document.getElementById('followUser').value = '';
+            updateFeed();
+        }
+
+        // Function to update the feed
+        function updateFeed() {
+            const feed = document.getElementById('feed');
+            feed.innerHTML = '';
+
+            // Filter posts by following users
+            const filteredPosts = posts.filter(post => following.has(post.username));
+
+            if (filteredPosts.length === 0) {
+                feed.innerHTML = '<p class="empty-feed">No posts yet. Follow someone to see posts!</p>';
+                return;
+            }
+
+            // Render posts
+            filteredPosts.forEach(post => {
+                const postElement = document.createElement('div');
+                postElement.className = 'post';
+                postElement.innerHTML = `
+                    <div class="author">${post.username}</div>
+                    <div class="content">${post.message}</div>
+                `;
+                feed.appendChild(postElement);
+            });
+        }
+    </script>
+</body>
+</html>

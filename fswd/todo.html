@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List Manager</title>
+    <style>
+        /* Basic Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body Styling */
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Container */
+        .container {
+            width: 90%;
+            max-width: 400px;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Title */
+        .title {
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        /* Form */
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            color: #fff;
+            background: #f76b8a;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .btn:hover {
+            background: #f14a69;
+        }
+
+        /* To-Do Section */
+        .todo-container {
+            display: none;
+            text-align: center;
+        }
+
+        .todo-container .title {
+            margin-top: 20px;
+            color: #f76b8a;
+        }
+
+        .todo-list {
+            margin-top: 15px;
+            list-style: none;
+            padding: 0;
+        }
+
+        .todo-item {
+            background: #f9f9f9;
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #ddd;
+        }
+
+        .todo-item .remove {
+            background: #ff4757;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            font-size: 12px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .todo-item .remove:hover {
+            background: #e63946;
+        }
+
+        .add-todo {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+        }
+
+        .add-todo input {
+            width: 70%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .add-todo button {
+            width: 25%;
+            background: #54a0ff;
+            color: #fff;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .add-todo button:hover {
+            background: #376eb6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Login Section -->
+        <div class="login-container">
+            <div class="title">Login</div>
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" placeholder="Enter your username">
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="Enter your password">
+            </div>
+            <button class="btn" onclick="login()">Login</button>
+        </div>
+
+        <!-- To-Do Section -->
+        <div class="todo-container">
+            <div class="title">My To-Do List</div>
+            <ul class="todo-list" id="todo-list"></ul>
+            <div class="add-todo">
+                <input type="text" id="new-todo" placeholder="Add a new task">
+                <button onclick="addTodo()">Add</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Simulated login function
+        function login() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            if (username && password) {
+                document.querySelector('.login-container').style.display = 'none';
+                document.querySelector('.todo-container').style.display = 'block';
+            } else {
+                alert('Please enter valid credentials.');
+            }
+        }
+
+        // Add To-Do item
+        function addTodo() {
+            const todoText = document.getElementById('new-todo').value;
+            if (todoText) {
+                const todoList = document.getElementById('todo-list');
+                const todoItem = document.createElement('li');
+                todoItem.className = 'todo-item';
+                todoItem.innerHTML = `
+                    <span>${todoText}</span>
+                    <button class="remove" onclick="removeTodo(this)">Remove</button>
+                `;
+                todoList.appendChild(todoItem);
+                document.getElementById('new-todo').value = '';
+            } else {
+                alert('Please enter a task.');
+            }
+        }
+
+        // Remove To-Do item
+        function removeTodo(button) {
+            button.parentElement.remove();
+        }
+    </script>
+</body>
+</html>

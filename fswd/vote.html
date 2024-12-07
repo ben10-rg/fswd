@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voting Application</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .vote-buttons {
+            text-align: center;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            margin: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .results {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .result {
+            margin: 10px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Vote for Your Favorite Candidate</h1>
+
+        <div class="vote-buttons">
+            <button onclick="vote('Candidate 1')">Vote for Candidate 1</button>
+            <button onclick="vote('Candidate 2')">Vote for Candidate 2</button>
+            <button onclick="vote('Candidate 3')">Vote for Candidate 3</button>
+        </div>
+
+        <div class="results">
+            <h2>Current Vote Counts:</h2>
+            <div id="candidate1-result" class="result">Candidate 1: 0 votes</div>
+            <div id="candidate2-result" class="result">Candidate 2: 0 votes</div>
+            <div id="candidate3-result" class="result">Candidate 3: 0 votes</div>
+        </div>
+    </div>
+
+    <script>
+        let votes = {
+            'Candidate 1': 0,
+            'Candidate 2': 0,
+            'Candidate 3': 0
+        };
+
+        function vote(candidate) {
+            // Increment vote for the selected candidate
+            votes[candidate]++;
+            // Update the vote count display
+            document.getElementById(`${candidate.toLowerCase().replace(' ', '')}-result`).textContent = `${candidate}: ${votes[candidate]} votes`;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Delivery</title>
+    <style>
+        /* Basic Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body Styling */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fff;
+            color: #000;
+            padding: 20px;
+        }
+
+        /* Container */
+        .container {
+            max-width: 800px;
+            margin: auto;
+            border: 1px solid #000;
+            border-radius: 8px;
+            padding: 20px;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        header h1 {
+            font-size: 24px;
+            text-transform: uppercase;
+        }
+
+        header p {
+            font-size: 16px;
+        }
+
+        /* Menu Section */
+        .menu {
+            margin-bottom: 20px;
+        }
+
+        .menu-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #000;
+            padding: 10px 0;
+        }
+
+        .menu-item h3 {
+            font-size: 18px;
+        }
+
+        .menu-item button {
+            padding: 5px 10px;
+            font-size: 14px;
+            color: #fff;
+            background: #000;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .menu-item button:hover {
+            background: #333;
+        }
+
+        /* Order Summary Section */
+        .order-summary {
+            border-top: 1px solid #000;
+            padding-top: 20px;
+        }
+
+        .order-summary h2 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .order-list {
+            list-style: none;
+            margin-bottom: 20px;
+        }
+
+        .order-list li {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 0;
+        }
+
+        .total {
+            font-weight: bold;
+            font-size: 18px;
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Restaurant Menu</h1>
+            <p>Order delicious food from our restaurant</p>
+        </header>
+
+        <!-- Menu Section -->
+        <div class="menu">
+            <div class="menu-item">
+                <h3>Pizza</h3>
+                <div>
+                    <span>$12</span>
+                    <button onclick="addToOrder('Pizza', 12)">Add to Order</button>
+                </div>
+            </div>
+            <div class="menu-item">
+                <h3>Burger</h3>
+                <div>
+                    <span>$8</span>
+                    <button onclick="addToOrder('Burger', 8)">Add to Order</button>
+                </div>
+            </div>
+            <div class="menu-item">
+                <h3>Pasta</h3>
+                <div>
+                    <span>$10</span>
+                    <button onclick="addToOrder('Pasta', 10)">Add to Order</button>
+                </div>
+            </div>
+            <div class="menu-item">
+                <h3>Salad</h3>
+                <div>
+                    <span>$7</span>
+                    <button onclick="addToOrder('Salad', 7)">Add to Order</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Order Summary Section -->
+        <div class="order-summary">
+            <h2>Your Order</h2>
+            <ul class="order-list" id="order-list">
+                <!-- Order items will be added here dynamically -->
+            </ul>
+            <div class="total" id="total-cost">Total: $0</div>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript for handling order logic
+        let order = [];
+        let totalCost = 0;
+
+        // Function to add an item to the order
+        function addToOrder(itemName, itemPrice) {
+            // Add item to the order list
+            order.push({ name: itemName, price: itemPrice });
+
+            // Update the total cost
+            totalCost += itemPrice;
+
+            // Render the updated order summary
+            renderOrder();
+        }
+
+        // Function to render the order summary
+        function renderOrder() {
+            const orderList = document.getElementById('order-list');
+            const totalCostElement = document.getElementById('total-cost');
+
+            // Clear the current order list
+            orderList.innerHTML = '';
+
+            // Populate the order list
+            order.forEach(item => {
+                const listItem = document.createElement('li');
+                listItem.innerHTML = `<span>${item.name}</span><span>$${item.price}</span>`;
+                orderList.appendChild(listItem);
+            });
+
+            // Update the total cost
+            totalCostElement.textContent = `Total: $${totalCost}`;
+        }
+    </script>
+</body>
+</html>

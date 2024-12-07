@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Microblogging App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .form-section {
+            margin-bottom: 20px;
+        }
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 20px;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .post {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+        .post .author {
+            font-weight: bold;
+            color: #007bff;
+        }
+        .post .content {
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Microblogging App</h1>
+
+        <div class="form-section">
+            <h2>Create Post</h2>
+            <input type="text" id="username" placeholder="Your username">
+            <textarea id="content" rows="4" placeholder="What's on your mind?"></textarea>
+            <button onclick="createPost()">Post</button>
+        </div>
+
+        <div class="form-section">
+            <h2>Follow a User</h2>
+            <input type="text" id="followUsername" placeholder="Enter username to follow">
+            <button onclick="followUser()">Follow</button>
+        </div>
+
+        <div class="form-section">
+            <h2>Feed</h2>
+            <div id="feed"></div>
+        </div>
+    </div>
+
+    <script>
+        const posts = [];
+        const following = new Set();
+
+        function createPost() {
+            const username = document.getElementById('username').value.trim();
+            const content = document.getElementById('content').value.trim();
+
+            if (!username || !content) {
+                alert('Please fill in all fields!');
+                return;
+            }
+
+            posts.push({ username, content });
+            document.getElementById('username').value = '';
+            document.getElementById('content').value = '';
+            updateFeed();
+        }
+
+        function followUser() {
+            const followUsername = document.getElementById('followUsername').value.trim();
+
+            if (!followUsername) {
+                alert('Enter a username to follow!');
+                return;
+            }
+
+            following.add(followUsername);
+            alert(`You are now following ${followUsername}!`);
+            document.getElementById('followUsername').value = '';
+            updateFeed();
+        }
+
+        function updateFeed() {
+            const feed = document.getElementById('feed');
+            feed.innerHTML = '';
+
+            posts
+                .filter(post => following.has(post.username))
+                .forEach(post => {
+                    const postElement = document.createElement('div');
+                    postElement.className = 'post';
+                    postElement.innerHTML = `
+                        <div class="author">${post.username}</div>
+                        <div class="content">${post.content}</div>
+                    `;
+                    feed.appendChild(postElement);
+                });
+
+            if (feed.innerHTML === '') {
+                feed.innerHTML = '<p>No posts to show. Start following users!</p>';
+            }
+        }
+    </script>
+</body>
+</html>

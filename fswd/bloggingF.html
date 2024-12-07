@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Micro Blogging App</title>
+  <style>
+    /* General Styles */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f9;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 20px auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      text-align: center;
+      color: #444;
+    }
+
+    .post-box {
+      margin-bottom: 20px;
+    }
+
+    .post-box textarea {
+      width: 100%;
+      height: 80px;
+      font-size: 16px;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      resize: none;
+    }
+
+    .post-box button {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      margin-top: 10px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .post-box button:hover {
+      background-color: #0056b3;
+    }
+
+    .posts {
+      margin-top: 20px;
+    }
+
+    .post {
+      padding: 15px;
+      margin-bottom: 10px;
+      border-radius: 5px;
+      background-color: #f9f9f9;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .post .author {
+      font-weight: bold;
+      color: #007bff;
+    }
+
+    .post .content {
+      margin-top: 10px;
+      font-size: 16px;
+    }
+
+    .followers {
+      margin-top: 20px;
+      padding: 15px;
+      border-radius: 5px;
+      background-color: #f1f1f1;
+      font-size: 14px;
+    }
+
+    .followers strong {
+      color: #444;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Micro Blogging App</h1>
+
+    <!-- Post Creation Section -->
+    <div class="post-box">
+      <textarea id="postContent" placeholder="Write something..."></textarea>
+      <button onclick="addPost()">Post</button>
+    </div>
+
+    <!-- Follower Information -->
+    <div class="followers">
+      You have <strong id="followerCount">5</strong> followers.
+    </div>
+
+    <!-- Display Posts -->
+    <div class="posts" id="posts"></div>
+  </div>
+
+  <script>
+    // Array to hold posts
+    let posts = [];
+
+    // Function to add a new post
+    function addPost() {
+      const postContent = document.getElementById("postContent").value.trim();
+      if (postContent === "") {
+        alert("Post content cannot be empty!");
+        return;
+      }
+
+      // Create a new post object
+      const newPost = {
+        author: "You",
+        content: postContent,
+        timestamp: new Date().toLocaleString(),
+      };
+
+      // Add post to posts array
+      posts.unshift(newPost);
+
+      // Clear textarea
+      document.getElementById("postContent").value = "";
+
+      // Display the updated posts
+      displayPosts();
+    }
+
+    // Function to display posts
+    function displayPosts() {
+      const postsContainer = document.getElementById("posts");
+      postsContainer.innerHTML = "";
+
+      if (posts.length === 0) {
+        postsContainer.innerHTML = "<p>No posts yet. Be the first to post something!</p>";
+        return;
+      }
+
+      posts.forEach((post) => {
+        const postElement = document.createElement("div");
+        postElement.className = "post";
+
+        postElement.innerHTML = `
+          <div class="author">${post.author}</div>
+          <div class="timestamp">${post.timestamp}</div>
+          <div class="content">${post.content}</div>
+        `;
+
+        postsContainer.appendChild(postElement);
+      });
+    }
+
+    // Simulate followers (randomly increment follower count)
+    function simulateFollowers() {
+      const followerCount = document.getElementById("followerCount");
+      let currentCount = parseInt(followerCount.textContent);
+
+      // Increment follower count randomly every 5-10 seconds
+      setInterval(() => {
+        const increment = Math.floor(Math.random() * 3);
+        currentCount += increment;
+        followerCount.textContent = currentCount;
+      }, Math.random() * 5000 + 5000);
+    }
+
+    // Initialize the app
+    displayPosts();
+    simulateFollowers();
+  </script>
+</body>
+</html>
